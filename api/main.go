@@ -6,6 +6,7 @@ import (
 	"api/roots/connect"
 	"api/roots/database"
 	"api/roots/session"
+	"api/roots/shop"
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"log"
@@ -38,6 +39,7 @@ func main() {
 	r.Get("/api/auto-login", account.AutoLogin)
 	r.Get("/api", connect.AccessPoint)
 	r.Post("/api/logout", session.Logout)
+	r.Post("/api/add-item", shop.AddItem)
 	fmt.Println("https://127.0.0.1:3000")
 	log.Fatal(api.ListenAndServeTLS("ssl/api.cert", "ssl/api.key"))
 }
