@@ -8,11 +8,15 @@ const AccountFormContainer = lazy(()=>import("./roots/account/AccountFormContain
 const Navigator = lazy(()=>import("./roots/navigation/Navigator.jsx"));
 const Home = lazy(()=>import("./roots/main/Home.jsx"));
 const NotFound = lazy(()=>import("./roots/not-found/NotFound.jsx"));
+const Profile = lazy(()=>import("./roots/profile/Profile.jsx"));
+const Shop = lazy(()=>import("./roots/shop/Shop.jsx"));
+const AddItemToShop = lazy(()=>import("./roots/shop/AddItemForm.jsx"));
 import Loading from "./roots/not-found/Loading.jsx";
-
-const stdLoading = {
+ 
+const stdStates = {
     loadding:false,
     error:false,
+    logged:false,
 }
 
 const stdData = {
@@ -20,11 +24,11 @@ const stdData = {
     login:"",
 }
 export default function App() {
-    const [loading,setLoading] = useState(stdLoading);
+    const [states,setStates] = useState(stdStates);
     const [data,setData] = useState(stdData);
     const connection = useRef(false);
     function refresh(name, bool) {
-        setLoading(prev => ({...prev, [name]:bool}));
+        setStates(prev => ({...prev, [name]:bool}));
     }
 
     async function autoLogin() {
@@ -32,6 +36,7 @@ export default function App() {
             refresh("loading", true);
             const res = await getLoginData();
             setData(res);
+            refresh("logged", true);
         } catch(err) {
             refresh("error", true);
         } finally {
@@ -39,7 +44,6 @@ export default function App() {
         }
     }
     
-    console.log(data);
     useEffect(() => {
         if(connection.current) return;
         connection.current = true;
@@ -57,6 +61,9 @@ export default function App() {
                             <Route index element={<LoginToAccount/>} />
                             <Route path="create" element={<CreateAccount/>}/>
                         </Route>
+                        <Route path="profile" element={<Profile log={states.logged}/>}/>
+                        <Route path="shop" element={<Shop/>} />
+                        <Route path="shop/add-item" element={<AddItemToShop/>}/>
                         <Route path="*" element={<NotFound/>}/>
                     </Routes>
                 </BrowserRouter>

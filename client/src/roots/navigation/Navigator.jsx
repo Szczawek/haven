@@ -16,6 +16,9 @@ export default function Navigator() {
                     <li className="link">
                         <NavLink className={({isActive}) => isActive? "active": ""} to="shop">Shop</NavLink>
                     </li>
+                    <li className="link">
+                        <NavLink className={({isActive}) => isActive? "active": ""} to="profile">Profile</NavLink>
+                    </li>
                 </ul>
             </nav>
         </header>
