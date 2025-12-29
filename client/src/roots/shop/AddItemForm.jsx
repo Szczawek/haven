@@ -1,14 +1,15 @@
 import {Link} from "react-router";
 import {useState} from "react";
+import {addItem} from "./addItem.js";
+
 const stdData = {
     name:"",
-    price:"",
-    amount:1,
+    price:0,
+    amount:1
 }
-
 const stdLoading = {
     loading:false,
-    error:false,
+    error:false
 }
 
 export default function AddItemForm() {
@@ -23,15 +24,26 @@ export default function AddItemForm() {
         const {name,value} = e.target;
         setData(prev => ({...prev,[name]:value}));
     }
-    function disabled(e) {
-        console.log(e.target.value)
-        if(e.target.value.includes(".")) console.log(2);
-        rewrite(e);
+    function disable(e) {
+        const forbidden = ["e",".","-",",","+"];
+        if(forbidden.includes(e.key)) e.preventDefault();
+    }
+    function enchancedDisable(e) {
+        if(data.price == "") disable(e);
+    }
+    function def(e) {
+        const {name, value} = e.target; 
+        if(value == "") setData(prev => ({...prev, [name]: name == "price"? 0 : 1}));
     }
     async function submit(e) {
         try {
-            refresh("loading",true);
             e.preventDefault();    
+            
+            //temporary
+            //temporary
+            const data = {...data};
+            if(data.price < 1 && data.price > 0) data.price = 1;
+            refresh("loading",true);
         } catch(err) {
             refresh("error",true);
         } finally {
@@ -45,23 +57,22 @@ export default function AddItemForm() {
                 <p>Click bellow for:</p>
                 <Link to="../shop">Go Back to shop</Link>
             </header>
-            <form className="add-item">
-                <label htmlFor="inp-shop-i">
+            <form onSubmit={submit} className="add-item">
+                <label htmlFor="inp-image">
                     Image
-                    <input id="inp-shop-i" type="file" placeholder="image of product" required />
+                    <input id="inp-image" type="file" placeholder="image of product" required />
                 </label>
-                <label> 
+                <label htmlFor="inp-name"> 
                     Name
-                    <input required placholder="item name..."/>
+                    <input id="inp-name" value={data.name} onChange={rewrite} name="name" minLength="1" maxLength="100" required placholder="name"/>
                 </label>
-                <label htmlFor="inp-shop-p">
+                <label htmlFor="inp-p">
                     Price
-                    <input id="inp-shop-p" placeholder="item price..." required/>
+                    <input id="inp-price" value={data.price} onKeyDown={enchancedDisable} onChange={rewrite} autoComplete="off" onBlur={def} type="number" min="0" max="1000000000" name="price" placeholder="price" required/>
                 </label>
-                <label>
+                <label htmlFor="inp-amount">
                     Amount
-                    <input id="inp-shop-a" onChange={disabled} autoComplete="off" value={data.amount} min="1" max="1000000" type="number" name="amount" placeholder="iteam amount..." required/>
-        i
+                    <input id="inp-amount" onChange={rewrite} onKeyDown={disable} autoComplete="off" onBlur={def} value={data.amount} min="1" max="1000000" type="number" name="amount" placeholder="amount" required/>
                 </label>
                 <button className="sb" type="submit">Submit</button>
             </form>
