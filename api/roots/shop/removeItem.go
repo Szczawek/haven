@@ -33,4 +33,4 @@ func RemoveItem(res http.ResponseWriter, req *http.Request) {
 		http.Error(res, "database error", http.StatusInternalServerError)
 		return
 	}
-}}}}
+}

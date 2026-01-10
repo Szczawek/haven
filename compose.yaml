@@ -5,17 +5,54 @@ services:
     container_name: client
     build: 
       context: client
-      dockerfile: Dockerfile
     ports:
       - "443:443"
+    networks: 
+     - frontend
+
+  api: 
+    build:
+      context: api
+    expose:
+        - "3000"
+    networks:
+      - backend
+      - deepback
+    env_file: api/.env-dev
+    volumes:
+      - ./api/ssl:/etc/api/ssl:ro
+    depends_on:
+      - database
+    restart: unless-stopped
+  proxy: 
+    container_name: proxy
+    build:
+      context: proxy     
+    ports: 
+    - "4000:4000"
+    networks:
+      - frontend
+      - backend
+    restart: unless-stopped
   database: 
     container_name: db
     build:
       context: sql
-      dockerfile: Dockerfile
     restart: always
+    ports:
+      - "3307:3306"
+    networks:
+      - deepback
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-p9goFK18O7XNFZI"]
       interval: 3s
       retries: 5
       start_period: 20s
+
+networks: 
+  backend:
+    driver: bridge
+  frontend: 
+    driver: bridge
+  deepback:
+    driver: bridge

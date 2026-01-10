@@ -3,6 +3,7 @@ package db
 import (
 	"database/sql"
 	"fmt"
+    "os"
 	"github.com/go-sql-driver/mysql"
 )
 
@@ -18,7 +19,7 @@ func Init() error {
 	conf.Passwd = "9goFK18O7XNFZI"
 	conf.DBName = "garden"
 	conf.Net = "tcp"
-	conf.Addr = "127.0.0.1:3306"
+	conf.Addr = os.Getenv("DB_ADDR")
 
 	//#Litle digresion;
 	//better to have var than :=(inferior); Var gives option to asing value for it,

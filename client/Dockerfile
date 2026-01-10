@@ -34,8 +34,6 @@ RUN rm -f /etc/nginx/conf.d/default.conf
 
 COPY nginx/ /etc/nginx/conf.d
 
-EXPOSE 443
-
 HEALTHCHECK CMD wget --no-check-certificate --quiet --tries=1 --spider https://127.0.0.1 || exit 1
 
 

@@ -4,7 +4,7 @@ export async function getLoginData() {
         credentials:"include",
     }
 
-    const res = await fetch("https://127.0.0.1:3000/api/auto-login", options);
+    const res = await fetch("https://127.0.0.1:4000/api/auto-login", options);
     if(!res.ok) throw new Error(res.status);
     const obj = await res.json();
     return obj;

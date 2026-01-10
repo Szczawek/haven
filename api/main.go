@@ -9,17 +9,19 @@ import (
 	"api/roots/shop"
 	"fmt"
 	"github.com/go-chi/chi/v5"
+	"github.com/joho/godotenv"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
-type Person struct {
-	ID   int
-	Name string
-}
-
 func main() {
+	if err := os.Getenv("API_CERT"); err == "" {
+		if err := godotenv.Load(".env"); err != nil {
+		    log.Fatal("Env doesn't work")
+		}
+	}
 	if err := db.Init(); err != nil {
 		fmt.Printf("error: %#v\n", err)
 	}
@@ -32,6 +34,10 @@ func main() {
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
+
+	cert := os.Getenv("API_CERT")
+	key := os.Getenv("API_KEY")
+
 	r.Use(config.CorsConfig)
 	r.NotFound(config.NotFound)
 	r.Post("/api/login-to-account", account.LoginToAccount)
@@ -41,5 +47,5 @@ func main() {
 	r.Post("/api/logout", session.Logout)
 	r.Post("/api/add-item", shop.AddItem)
 	fmt.Println("https://127.0.0.1:3000")
-	log.Fatal(api.ListenAndServeTLS("ssl/api.cert", "ssl/api.key"))
+	log.Fatal(api.ListenAndServeTLS(cert, key))
 }
