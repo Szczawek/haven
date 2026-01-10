@@ -1,0 +1,28 @@
+.navigator-box .navigator {
+    display:grid;
+    padding-block:2rem;
+    justify-content:center;
+    grid-template-columns: 800px;
+}
+.navigator-box .list {
+    display:grid;
+    grid-template-columns: repeat(5, 7rem);
+    justify-content: space-between;
+}
+.navigator-box .link {
+    text-align:center;
+}
+
+.navigator-box .link .active {
+    transition:  600ms easy-out;
+}
+
+.navigator-box .link a {
+    padding-block: 1rem;
+}
+
+.navigator-box .link a:is(.active, :hover){
+    font-size:1.5rem;
+    border-bottom: 4px solid white;
+    color: var(--contrast-bg);
+}

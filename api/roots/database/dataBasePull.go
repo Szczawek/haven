@@ -3,8 +3,8 @@ package db
 import (
 	"database/sql"
 	"fmt"
-    "os"
 	"github.com/go-sql-driver/mysql"
+	"os"
 )
 
 // LOG FATAL IS TEMPORARY!

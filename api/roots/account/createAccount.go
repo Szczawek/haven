@@ -2,6 +2,7 @@ package account
 
 import (
 	"api/roots/database"
+	"api/roots/hash"
 	"api/roots/session"
 	"database/sql"
 	"encoding/json"
@@ -29,10 +30,16 @@ func CreateAccount(res http.ResponseWriter, req *http.Request) {
 	var id int
 	if err := row.Scan(&id); err != nil {
 		if err == sql.ErrNoRows {
+			password, err := argonPassword.Hash(data.Password)
+			if err != nil {
+				http.Error(res, "Hash err; Problem with hash process", http.StatusInternalServerError)
+				return
+			}
+			data.Password = password
 			insertData(res, data)
 			return
 		}
-		http.Error(res, "Database error NO.1", http.StatusInternalServerError)
+		http.Error(res, "Database err; Problem with row.Scan", http.StatusInternalServerError)
 		return
 	}
 	res.Write([]byte("acc with that login already exists!"))
@@ -42,12 +49,12 @@ func insertData(res http.ResponseWriter, data User) {
 	insertCmd := `INSERT INTO users(name,login,password) VALUES(?,?,?)`
 	r, err := db.DB.Exec(insertCmd, data.Name, data.Login, data.Password)
 	if err != nil {
-		http.Error(res, "Database error NO2", http.StatusInternalServerError)
+		http.Error(res, "Database err. Inserting data failure", http.StatusInternalServerError)
 		return
 	}
 	id, err := r.LastInsertId()
 	if err != nil {
-		http.Error(res, "Database error No3", http.StatusInternalServerError)
+		http.Error(res, "Database err; Can't read last id", http.StatusInternalServerError)
 		return
 	}
 	num := strconv.FormatInt(id, 10)

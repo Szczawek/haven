@@ -1,5 +1,5 @@
 import {NavLink} from "react-router";
-
+import "./nav.css";
 export default function Navigator() {
     return <header className="navigator-box">
             <nav className="navigator">

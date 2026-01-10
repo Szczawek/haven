@@ -1,7 +1,7 @@
 import {lazy,Suspense, useEffect, useState, useRef} from "react";
 import {BrowserRouter, Route, Routes}  from "react-router";
 import {getLoginData} from "./global/getLoginData.js";
-
+import "./styles.css";
 const CreateAccount = lazy(()=>import("./roots/account/CreateAccount.jsx"));
 const LoginToAccount = lazy(()=>import("./roots/account/LoginToAccount.jsx"));
 const AccountFormContainer = lazy(()=>import("./roots/account/AccountFormContainer.jsx"));

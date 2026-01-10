@@ -19,7 +19,7 @@ import (
 func main() {
 	if err := os.Getenv("API_CERT"); err == "" {
 		if err := godotenv.Load(".env"); err != nil {
-		    log.Fatal("Env doesn't work")
+			log.Fatal("Env doesn't work")
 		}
 	}
 	if err := db.Init(); err != nil {
