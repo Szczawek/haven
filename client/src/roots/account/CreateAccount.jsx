@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useRef} from "react";
 import {createAccount} from "./createAccount.js";
 import {Link} from "react-router";
 const stdData = {
@@ -15,6 +15,8 @@ const stdLoading = {
 export default function CreateAccount() {
     const [data,setData] = useState(stdData);
     const [loading,setLoading] = useState(stdLoading);
+    const passInp = useRef(null);
+    const confInp = useRef(null);
 
     function refresh(name, bool) {
         setLoading(prev =>({...prev, [name]:bool}))
@@ -24,9 +26,20 @@ export default function CreateAccount() {
         const {value,name} = e.target
         setData(prev => ({...prev,[name]:value}));
     }
+
+    function setShowPass() {
+        if(passInp.current.type == "password") {
+            passInp.current.type = "text";
+            confInp.current.type = "text";
+            return;
+        }
+        passInp.current.type = "password";
+        confInp.current.type = "password";
+    }
     async function submit(e) {
         try {
-            e.preventDefault();
+            e.preventDefault()
+            //if(data.password != data.copassword) throw new Error("Not the same password");
             refresh("loading",true);
             const relData = {...data};
             delete relData.copassword; 
@@ -40,6 +53,7 @@ export default function CreateAccount() {
     }
     return <div className="create-box">
             <form onSubmit={submit} className="create-form">
+                <h2 className="title">Create</h2>
                 <label htmlFor="inp-name" className="lb-acc">
                     Name
                     <input id="inp-name" value={data.name} onChange={setValue} required maxLength="30" minLength="3" name="name" placeholder="Put your name..." />
@@ -50,13 +64,14 @@ export default function CreateAccount() {
                 </label>
                 <label htmlFor="inp-password" className="lb-acc">
                     Password
-                    <input id="inp-password" value={data.password} onChange={setValue} type="password" required maxLength="30" name="password" minLength="3" placeholder="Put your password..." />
+                    <button className="show-pass" onClick={setShowPass} type="button">X</button>
+                    <input ref={passInp} id="inp-password" value={data.password} onChange={setValue} type="password" required maxLength="30" name="password" minLength="3" placeholder="Put your password..." />
                 </label>
                 <label htmlFor="inp-c-password" className="lb-acc">
                     Confirm Password
-                    <input id="inp-c-password" value={data.copassword} onChange={setValue} type="password" required maxLength="30" name="copassword" minLength="3" placeholder="Put your password..." />
+                    <input ref={confInp} id="inp-c-password" value={data.copassword} onChange={setValue} type="password" required maxLength="30" name="copassword" minLength="3" placeholder="Put your password..." />
                 </label>
-                <button type="submit">Submit</button>
+                <button className="sb" type="submit">Submit</button>
             </form>
             <div className="panel">
                 <Link to="..">Login in</Link>

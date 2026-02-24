@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useRef} from "react";
 import {loginToAccount} from "./loginToAccount.js";
 import {Link} from "react-router";
 const stdData = {
@@ -14,6 +14,7 @@ const stdLoading = {
 export default function LoginToAccount() {
     const [data, setData] = useState(stdData);
     const [loading,setLoading] = useState(stdLoading);
+    const passInp = useRef(null);
 
     function refresh(name,bool) {
         setLoading(prev => ({...prev,[name]:bool}))
@@ -22,6 +23,15 @@ export default function LoginToAccount() {
     function setValue(e) {
         const {name, value} = e.target;
         setData(prev => ({...prev, [name]:value}));
+    }
+
+    function setPassVis() {
+        const type = passInp.current.type;
+        if(type == "password") {
+            passInp.current.type = "text";
+            return;
+        }
+        passInp.current.type = "password";
     }
 
     async function submit(e) {
@@ -41,15 +51,17 @@ export default function LoginToAccount() {
 
     return <div className="login-ac">
             <form className="login-form" onSubmit={submit}>
+                <h2 className="title">Login</h2>
                 <label className="lb-acc" htmlFor="inp-l-login">
                  Login
-                    <input id="inp-l-login" required name="login" value={data.login} onChange={setValue} maxLength="30" minLength="3" placeholder="place your login..."/>
+                    <input  type="email" id="inp-l-login" required name="login" value={data.login} onChange={setValue} maxLength="30" minLength="3" placeholder="place your login..."/>
                 </label>   
                 <label className="lb-acc" htmlFor="inp-l-pass">
                     Password
-                    <input id="inp-l-pass" required name="password" value={data.password} onChange={setValue} maxLength="30" minLength="3" placeholder="place your password..."/>
+                    <input ref={passInp} type="password" id="inp-l-pass" required name="password" value={data.password} onChange={setValue} maxLength="30" minLength="3" placeholder="place your password..."/>
+                    <button type="button" onClick={setPassVis} className="show-pass">X</button>
                 </label> 
-                <button type="submit">Submit</button>
+                <button className="sb" type="submit">Submit</button>
             </form>
             <div className="panel">
                 <Link to="create">Create Account</Link>

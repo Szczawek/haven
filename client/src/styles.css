@@ -6,13 +6,26 @@
 
 :root {
     --contrast-bg:#BB2649;
-    --main-bg:#0d0d0d;
+    --main-bg:#000000;
+    --red: #854C65;
+    --red-c:#BE394F;
 }
 
 body {
-    font-size: 20px;
+    font-family: "Yrsa", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-size:20px;
     color:white;
     background-color:var(--main-bg);
+}
+
+input, textarea {
+    display:block;
+    color:inherit;
+    border:none;
+    outline:none;
 }
 
 button, a {
@@ -20,6 +33,7 @@ button, a {
 }
 
 a {
+    display:block;
     text-decoration:none;
 }
 

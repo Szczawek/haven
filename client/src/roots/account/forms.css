@@ -1,4 +1,39 @@
-.lb-acc {
+.acc-form-box .show-pass {
+    position:absolute;
+    right:0;
+    top: 0;
+    background-color:transparent;
+    height: 1.4rem;
+}
+.login-ac .login-form, .create-box .create-form {
     display:grid;
+    place-content:center;
     row-gap:1rem;
 }
+
+.login-ac .title, .create-box .title {
+    text-align: center;
+}
+.login-ac .lb-acc, .create-box .lb-acc {
+    display:grid;
+    position:relative;
+    row-gap:.4rem;
+}
+
+.login-ac .lb-acc input, .create-box .lb-acc input {
+    padding: .2rem .4rem;
+}
+
+.login-ac .sb, .create-box .sb {
+    background-color: var(--contrast-bg);
+    padding:.2rem .4rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: .6rem;
+    cursor:pointer;
+    transition: filter 150ms;;
+}
+.login-ac .sb:is(:hover,:focus), .create-box .sb:is(:hover, :focuse) {
+    filter:brightness(.5);
+}
+

@@ -2,9 +2,10 @@ package main
 
 import (
 	"api/roots/account"
+	"api/roots/blog"
 	"api/roots/config"
-	"api/roots/connect"
 	"api/roots/database"
+	"api/roots/middleware"
 	"api/roots/session"
 	"api/roots/shop"
 	"fmt"
@@ -27,6 +28,7 @@ func main() {
 	}
 
 	r := chi.NewRouter()
+	apiR := chi.NewRouter()
 	api := &http.Server{
 		Addr:           ":3000",
 		Handler:        r,
@@ -40,12 +42,16 @@ func main() {
 
 	r.Use(config.CorsConfig)
 	r.NotFound(config.NotFound)
-	r.Post("/api/login-to-account", account.LoginToAccount)
-	r.Post("/api/create-account", account.CreateAccount)
-	r.Get("/api/auto-login", account.AutoLogin)
-	r.Get("/api", connect.AccessPoint)
-	r.Post("/api/logout", session.Logout)
-	r.Post("/api/add-item", shop.AddItem)
+	r.Mount("/api", apiR)
+	r.Get("/start-session", middleware.ActiveSession)
+
+	// apiR.Use(middleware.doorTwo);
+	apiR.Post("/login-to-account", account.LoginToAccount)
+	apiR.Post("/create-account", account.CreateAccount)
+	apiR.Get("/auto-login", account.AutoLogin)
+	apiR.Post("/logout", session.Logout)
+	apiR.Post("/add-item", shop.AddItem)
+	apiR.Post("/add-post", blog.AddPost)
 	fmt.Println("https://127.0.0.1:3000")
 	log.Fatal(api.ListenAndServeTLS(cert, key))
 }

@@ -22,6 +22,8 @@ const stdStates = {
 const stdData = {
     name:"",
     login:"",
+    //temp
+    id:2,
 }
 export default function App() {
     const [states,setStates] = useState(stdStates);
@@ -56,7 +58,7 @@ export default function App() {
                 <BrowserRouter>
                     <Navigator />
                     <Routes>
-                        <Route index element={<Home/>}/>
+                        <Route index element={<Home id={data.id}/>}/>
                         <Route path="account" element={<AccountFormContainer/>}>
                             <Route index element={<LoginToAccount/>} />
                             <Route path="create" element={<CreateAccount/>}/>
