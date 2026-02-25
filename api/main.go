@@ -52,6 +52,8 @@ func main() {
 	apiR.Post("/logout", session.Logout)
 	apiR.Post("/add-item", shop.AddItem)
 	apiR.Post("/add-post", blog.AddPost)
+	apiR.Get("/get-posts", blog.GetPosts)
+
 	fmt.Println("https://127.0.0.1:3000")
 	log.Fatal(api.ListenAndServeTLS(cert, key))
 }

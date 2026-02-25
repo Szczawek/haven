@@ -16,7 +16,7 @@ function useGetPosts() {
                 const res = await fetch("https://127.0.0.1:3000/api/get-posts", options);
                 if(!res.ok) throw new Error(res.status);
                 const obj = await res.json();
-                setList(prev => ({...prev, ...obj}));
+                setList(prev => ([...prev, ...obj]));
             } catch(err) {
                 console.error(err)
             } finally {
