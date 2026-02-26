@@ -24,16 +24,17 @@ func AutoLogin(res http.ResponseWriter, req *http.Request) {
 
 // #Alwasy remember:
 // encoding/json needs public struct and variable, so all thing with upperCase
-type TpData struct {
-	Name  string
-	Login string
+type UserGet struct {
+	Name string `json:"name"`
+	ID   int    `json:"id"`
 }
 
 func getData(res http.ResponseWriter, id string) {
-	var userData TpData
-	var command string = "SELECT name, login FROM users WHERE id =?"
+	var userData UserGet
+	var command string = "SELECT name, id FROM users WHERE id =?"
 	row := db.DB.QueryRow(command, id)
-	if err := row.Scan(&userData.Name, &userData.Login); err != nil {
+	//No Questions about loading the same id;
+	if err := row.Scan(&userData.Name, &userData.ID); err != nil {
 		if err == sql.ErrNoRows {
 			http.Error(res, "Error with database(empty record)", http.StatusInternalServerError)
 			return
@@ -41,5 +42,7 @@ func getData(res http.ResponseWriter, id string) {
 		http.Error(res, "Error with database", http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(res).Encode(userData)
+	if err := json.NewEncoder(res).Encode(userData); err != nil {
+		http.Error(res, "Ecoding error", http.StatusInternalServerError)
+	}
 }

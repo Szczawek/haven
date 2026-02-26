@@ -12,7 +12,7 @@ const stdLoading = {
     loading:false,
     error: false,
 }
-export default function CreateAccount() {
+export default function CreateAccount({reLoading}) {
     const [data,setData] = useState(stdData);
     const [loading,setLoading] = useState(stdLoading);
     const passInp = useRef(null);
@@ -44,7 +44,8 @@ export default function CreateAccount() {
             const relData = {...data};
             delete relData.copassword; 
             const res = await createAccount(relData);
-            alert("logged!");
+            console.log("logged!")
+            reLoading();
         } catch(err) {
             refresh("error",true);
         } finally {
@@ -64,7 +65,7 @@ export default function CreateAccount() {
                 </label>
                 <label htmlFor="inp-password" className="lb-acc">
                     Password
-                    <button className="show-pass" onClick={setShowPass} type="button">X</button>
+                    <button tabIndex="-1" className="show-pass" onClick={setShowPass} type="button">X</button>
                     <input ref={passInp} id="inp-password" value={data.password} onChange={setValue} type="password" required maxLength="30" name="password" minLength="3" placeholder="Put your password..." />
                 </label>
                 <label htmlFor="inp-c-password" className="lb-acc">

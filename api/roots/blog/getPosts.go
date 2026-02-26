@@ -3,8 +3,8 @@ package blog
 import (
 	"api/roots/database"
 	"encoding/json"
+//	"math/rand"
 	"net/http"
-    "math/rand"
 )
 
 type PostTemp struct {
@@ -13,13 +13,13 @@ type PostTemp struct {
 	Content string `json:"content"`
 }
 
-//Algo for searching to update
+// Algo for searching to update
 func GetPosts(res http.ResponseWriter, req *http.Request) {
 	var listOfPosts []PostTemp
 
-	cmd := "SELECT users.id, users.name, posts.content FROM posts LEFT JOIN users ON posts.userID = users.id WHERE users.id IN (?,?,?,?,?)"
-    nums := Randomizer();
-	rows, err := db.DB.Query(cmd,nums[0],nums[1],nums[2],nums[3],nums[4]);
+	cmd := "SELECT users.id, users.name, posts.content FROM posts LEFT JOIN users ON posts.userID = users.id WHERE users.id"
+	//nums := Randomizer()
+	rows, err := db.DB.Query(cmd);
 	if err != nil {
 		http.Error(res, "Database error, Can't find posts", http.StatusInternalServerError)
 		return
@@ -40,10 +40,10 @@ func GetPosts(res http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func Randomizer() []int {
-    var nums []int;
-    for i := 0; i < 10; i++ {
-        nums = append(nums, rand.Intn(10));
-    }
-    return nums;
-}
+//func Randomizer() []int {
+//	var nums []int
+//	for i := 0; i < 10; i++ {
+//		nums = append(nums, rand.Intn(10))
+//	}
+//	return nums
+//}

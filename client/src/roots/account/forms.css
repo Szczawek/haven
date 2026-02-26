@@ -18,18 +18,29 @@
     display:grid;
     position:relative;
     row-gap:.4rem;
+    letter-spacing:.2rem;
+    font-size:1.3rem;
+    font-weight:bold;
 }
 
 .login-ac .lb-acc input, .create-box .lb-acc input {
-    padding: .2rem .4rem;
+    padding: .6rem 1rem;
+    color:black;
+    font-weight:700;
+    font-size: 1.4rem;
+}
+
+.login-ac input::placeholder, .create-box input::placeholder {
+    color:purple;
+    font-size:1.2rem;
 }
 
 .login-ac .sb, .create-box .sb {
     background-color: var(--contrast-bg);
-    padding:.2rem .4rem;
+    padding:.8rem .8rem;
     font-size: 1.2rem;
     font-weight: bold;
-    border-radius: .6rem;
+    border-radius: .4rem;
     cursor:pointer;
     transition: filter 150ms;;
 }

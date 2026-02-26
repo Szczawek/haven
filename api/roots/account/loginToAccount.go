@@ -9,28 +9,28 @@ import (
 	"net/http"
 )
 
-type Data struct {
+type AccLogin struct {
 	Login    string `json:"login"`
 	Password string `json:"password"`
 }
-type outData struct {
-	id       string
-	password string
+type LoggedUserTemp struct {
+	ID   string
+	Pass string
 }
 
 func LoginToAccount(res http.ResponseWriter, req *http.Request) {
 	defer req.Body.Close()
-	var loginData Data
-	if err := json.NewDecoder(req.Body).Decode(&loginData); err != nil {
+	var data AccLogin
+	if err := json.NewDecoder(req.Body).Decode(&data); err != nil {
 		http.Error(res, "JSON Error", http.StatusInternalServerError)
 		return
 	}
 
-	cmdLogin := "SELECT id, password FROM users WHERE login =?"
-	row := db.DB.QueryRow(cmdLogin, loginData.Login)
+	cmd := "SELECT id, password FROM users WHERE login =?"
+	row := db.DB.QueryRow(cmd, data.Login)
 
-	var otpData outData
-	if err := row.Scan(&otpData.id, &otpData.password); err != nil {
+	var user LoggedUserTemp
+	if err := row.Scan(&user.ID, &user.Pass); err != nil {
 		if err == sql.ErrNoRows {
 			http.Error(res, "Incorrect data", http.StatusForbidden)
 			return
@@ -38,10 +38,10 @@ func LoginToAccount(res http.ResponseWriter, req *http.Request) {
 		http.Error(res, "Database err. Scaning rows problem", http.StatusInternalServerError)
 		return
 	}
-	if err := argonPassword.UnHash(loginData.Password, otpData.password); err != nil {
+	if err := argonPassword.UnHash(data.Password, user.Pass); err != nil {
 		http.Error(res, "Incorrect data", http.StatusForbidden)
 		return
 	}
-	session.Login(res, otpData.id)
-	json.NewEncoder(res).Encode(otpData.id)
+	session.Login(res, user.ID)
+	json.NewEncoder(res).Encode("logged!")
 }

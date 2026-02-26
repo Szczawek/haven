@@ -21,14 +21,18 @@ body {
     background-color:var(--main-bg);
 }
 
-input, textarea {
+input, button, textarea {
     display:block;
     color:inherit;
     border:none;
     outline:none;
 }
 
-button, a {
+
+button {
+    background-color:transparent;
+}
+ a {
     color:inherit;
 }
 

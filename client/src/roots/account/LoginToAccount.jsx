@@ -11,7 +11,7 @@ const stdLoading = {
     error:false
 }
 
-export default function LoginToAccount() {
+export default function LoginToAccount({reLoading}) {
     const [data, setData] = useState(stdData);
     const [loading,setLoading] = useState(stdLoading);
     const passInp = useRef(null);
@@ -39,7 +39,8 @@ export default function LoginToAccount() {
             e.preventDefault();
             const res = await loginToAccount(data); 
             refresh("loading", true);
-            alert("logged")
+            console.log("logged")
+            reLoading()
         } catch(err) {
             console.error("erer")
             refresh("error",true);

@@ -1,9 +1,13 @@
 import "./forms.css";
-import {Outlet} from "react-router"
+import {Outlet, Navigate} from "react-router"
 
-export default function AccountFormContainer() {
+export default function AccountFormContainer({logged}) {
+   if(logged) {
+        return <Navigate to="/"/>
+   }
+
     return <div className="acc-form-box">
-            <p>Test</p>
+            <p>Test</p> 
             <Outlet/>
         </div>
 }

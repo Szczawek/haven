@@ -1,10 +1,14 @@
 .navigator-box {
+    position:relative;
     font-size: 1.6rem;
-    min-height:60px;
-    border-bottom: .4rem solid var(--red-c);
+    min-height:120px;
 }
 .navigator-box .navigator {
+    position:fixed;
+    border-bottom: .3rem solid var(--red-c);
     display:grid;
+    width:100%;
+    background-color:#0d0d0d;
     padding-block:1.4rem;
     justify-content:center;
     grid-template-columns: 800px;

@@ -35,7 +35,7 @@ export default function WritePost({id}) {
     return <form onSubmit={submit} className="write-post">
             <header className="user-info">
                 <div className="avatar">
-                    <img  alt="profile picture"/>
+                    <img src="/images/user.svg" alt="profile picture"/>
                 </div>
                 <div className="info">
                     <h2 className="nick">Name</h2>

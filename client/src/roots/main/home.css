@@ -1,37 +1,42 @@
 .home {
     display:grid;
+    row-gap:4rem;
     justify-content:center;
 }
+ 
 .home .write-post {
     width:800px;
+    background-color:#1a1a1a;
     display:grid;
+    border-radius:.8rem;
     padding-bottom:1rem;
-    border-bottom: .2rem solid var(--red-c);
+    border-block: .2rem solid var(--red-c);
     row-gap:1rem;
     padding-top:1rem;
 }
 
 .home .text-box {
     border-radius:.2rem;
-    padding: .4rem .8rem;
+    padding: .8rem 1rem;
     font-size:1.2rem;
     resize:none;
     width:100%;
-    min-height:6rem;
-    background-color:var(--red);
+    min-height:8rem;
+    background-color:#ff66ff;
 } 
 
 .home .text-box::-webkit-scrollbar {
     display: none;
 }
 .home .text-box::placeholder {
-    color:aqua;
+    color:white;
 }
 
 .home .write-post .user-info {
     display:grid;
     align-items:center;
     column-gap:1rem;
+    padding-inline:1rem;
     grid-template-columns: 1fr 3fr;
 }
 
@@ -54,10 +59,76 @@
     display:grid;
     justify-content: right;
 }
+.home .post-page {
+    display:grid;
+    row-gap:1rem;
+}
 
+.home .user-info .avatar img {
+    width: 4rem;
+}
+
+.home .user-info .options li button {
+    font-size: 1.2rem;
+    cursor:pointer;
+}
+.home .post {
+    border-radius:.2rem;
+    background-color:#1a1a1a;
+}
+.home .post .user-info {
+    display:grid;
+    padding: 1rem .8rem;
+    align-items:center;
+    border-bottom: 2px solid var(--red-c);
+    grid-template-columns: 1fr 4fr 1fr;
+}
+.home .post .options {
+    display:grid;
+    position:relative;
+    justify-content:right;
+}
+
+.home .user-info .list {
+    display:grid;
+    row-gap:1rem;
+    top:-1rem;
+    border: 2px solid var(--red-c);
+    justify-items:center;
+    min-width: 100px;
+    right:-.8rem;
+    backdrop-filter:blur(20px);
+    padding:.4rem .8rem;
+    position:absolute;
+}
+
+.home .user .info .option button {
+    cursor:pointer;
+    font-size:1.4rem;
+}
+.home .post .content {
+    font-size:1.4rem;
+    padding: 1rem .8rem;
+}
+
+.home .post .hidden {
+    visibility:hidden;
+}
+
+.home .post .interaction {
+    display:grid;
+    padding: .4rem .8rem;
+    grid-template-columns: repeat(3, max-content);
+    justify-content:space-between;
+}
+
+.home .post .interaction .st-btn {
+    cursor:pointer;
+    padding: .6rem .6rem;
+}
 @media (width < 850px) {
     .home .write-post  {
-        width: 100vw;
+        width: 100%;
     }
     
 }

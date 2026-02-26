@@ -10,7 +10,7 @@ import (
 	"strconv"
 )
 
-type User struct {
+type CreateAccTemp struct {
 	Name     string `json:"name"`
 	Login    string `json: "login"`
 	Password string `json: "password"`
@@ -19,14 +19,14 @@ type User struct {
 func CreateAccount(res http.ResponseWriter, req *http.Request) {
 	defer req.Body.Close()
 
-	var data User
+	var data CreateAccTemp
 	if err := json.NewDecoder(req.Body).Decode(&data); err != nil {
 		http.Error(res, "json error", http.StatusInternalServerError)
 		return
 	}
 
-	findCmd := `SELECT id FROM users WHERE login =?`
-	row := db.DB.QueryRow(findCmd, data.Login)
+	cmd := "SELECT id FROM users WHERE login =?"
+	row := db.DB.QueryRow(cmd, data.Login)
 	var id int
 	if err := row.Scan(&id); err != nil {
 		if err == sql.ErrNoRows {
@@ -42,12 +42,12 @@ func CreateAccount(res http.ResponseWriter, req *http.Request) {
 		http.Error(res, "Database err; Problem with row.Scan", http.StatusInternalServerError)
 		return
 	}
-	res.Write([]byte("acc with that login already exists!"))
+	res.Write([]byte("You can't use that email!"))
 }
 
-func insertData(res http.ResponseWriter, data User) {
-	insertCmd := `INSERT INTO users(name,login,password) VALUES(?,?,?)`
-	r, err := db.DB.Exec(insertCmd, data.Name, data.Login, data.Password)
+func insertData(res http.ResponseWriter, data CreateAccTemp) {
+	cmd := "INSERT INTO users(name,login,password) VALUES(?,?,?)"
+	r, err := db.DB.Exec(cmd, data.Name, data.Login, data.Password)
 	if err != nil {
 		http.Error(res, "Database err. Inserting data failure", http.StatusInternalServerError)
 		return

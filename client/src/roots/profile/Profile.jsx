@@ -1,9 +1,11 @@
 import {Navigate} from "react-router";
+import UserTablo from "./UserTablo.jsx"
+import "./profile.css";
 
-export default function Profile({login}) {
-    if(!login) return <Navigate to="/"/>
+export default function Profile({data}) {
+    //if(!login) return <Navigate to="/"/>
     
     return <div className="profile">
-           <p>Profile</p> 
+           <UserTablo data={data}/>
         </div>
 }

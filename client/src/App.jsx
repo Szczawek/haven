@@ -11,6 +11,7 @@ const NotFound = lazy(()=>import("./roots/not-found/NotFound.jsx"));
 const Profile = lazy(()=>import("./roots/profile/Profile.jsx"));
 const Shop = lazy(()=>import("./roots/shop/Shop.jsx"));
 const AddItemToShop = lazy(()=>import("./roots/shop/AddItemForm.jsx"));
+const EditProfile = lazy(()=>import("./roots/profile/EditProfile.jsx"));
 import Loading from "./roots/not-found/Loading.jsx";
  
 const stdStates = {
@@ -20,11 +21,11 @@ const stdStates = {
 }
 
 const stdData = {
-    name:"",
-    login:"",
-    //temp
-    id:2,
+    name: "",
+    hash: "",
+    id:"",
 }
+
 export default function App() {
     const [states,setStates] = useState(stdStates);
     const [data,setData] = useState(stdData);
@@ -38,6 +39,7 @@ export default function App() {
             refresh("loading", true);
             const res = await getLoginData();
             setData(res);
+            console.log(2)
             refresh("logged", true);
         } catch(err) {
             refresh("error", true);
@@ -59,11 +61,12 @@ export default function App() {
                     <Navigator />
                     <Routes>
                         <Route index element={<Home id={data.id}/>}/>
-                        <Route path="account" element={<AccountFormContainer/>}>
-                            <Route index element={<LoginToAccount/>} />
-                            <Route path="create" element={<CreateAccount/>}/>
+                        <Route path="edit-profile" element={<EditProfile/>}/>
+                        <Route path="account" element={<AccountFormContainer logged={states.logged}/>}>
+                            <Route index element={<LoginToAccount reLoading={autoLogin}/>} />
+                            <Route path="create" element={<CreateAccount reLoading={autoLogin}/>}/>
                         </Route>
-                        <Route path="profile" element={<Profile log={states.logged}/>}/>
+                        <Route path="profile" element={<Profile data={data}/>}/>
                         <Route path="shop" element={<Shop/>} />
                         <Route path="shop/add-item" element={<AddItemToShop/>}/>
                         <Route path="*" element={<NotFound/>}/>
