@@ -1,4 +1,4 @@
-import {useState, useRef} from "react";
+import {useState} from "react";
 import {loginToAccount} from "./loginToAccount.js";
 import {Link} from "react-router";
 const stdData = {
@@ -14,7 +14,7 @@ const stdLoading = {
 export default function LoginToAccount({reLoading}) {
     const [data, setData] = useState(stdData);
     const [loading,setLoading] = useState(stdLoading);
-    const passInp = useRef(null);
+    const [isPassHidden, setIsPassHidden] = useState(true);
 
     function refresh(name,bool) {
         setLoading(prev => ({...prev,[name]:bool}))
@@ -25,14 +25,6 @@ export default function LoginToAccount({reLoading}) {
         setData(prev => ({...prev, [name]:value}));
     }
 
-    function setPassVis() {
-        const type = passInp.current.type;
-        if(type == "password") {
-            passInp.current.type = "text";
-            return;
-        }
-        passInp.current.type = "password";
-    }
 
     async function submit(e) {
         try {
@@ -59,12 +51,13 @@ export default function LoginToAccount({reLoading}) {
                 </label>   
                 <label className="lb-acc" htmlFor="inp-l-pass">
                     Password
-                    <input ref={passInp} type="password" id="inp-l-pass" required name="password" value={data.password} onChange={setValue} maxLength="30" minLength="3" placeholder="place your password..."/>
-                    <button type="button" onClick={setPassVis} className="show-pass">X</button>
+                    <input  type={isPassHidden? "password": "text"} id="inp-l-pass" required name="password" value={data.password} onChange={setValue} maxLength="30" minLength="3" placeholder="place your password..."/>
+                    <button type="button" onClick={()=>setIsPassHidden(prev =>!prev)} className="show-pass">{isPassHidden? <img src="/images/eye-close.svg" alt="icon"/> : <img src="/images/eye-open.svg" alt="icon"/>}</button>
                 </label> 
                 <button className="sb" type="submit">Submit</button>
             </form>
             <div className="panel">
+                <p>Go to: </p>
                 <Link to="create">Create Account</Link>
             </div>
         </div>

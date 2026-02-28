@@ -1,7 +1,7 @@
 package jwt
 
 import (
-	"github.com/go-jwt/jwt/v5"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 func ValidToken(value string) error {

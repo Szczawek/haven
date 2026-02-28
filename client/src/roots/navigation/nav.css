@@ -15,7 +15,7 @@
 }
 .navigator-box .list {
     display:grid;
-    grid-template-columns: repeat(5, 7rem);
+    grid-template-columns: repeat(4, 7rem);
     justify-content: space-between;
 }
 .navigator-box .link {

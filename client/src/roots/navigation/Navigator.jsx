@@ -7,9 +7,6 @@ export default function Navigator() {
                     <li className="link">
                         <NavLink className={({isActive}) => isActive? "active": ""} to="">Home</NavLink>
                     </li>
-                      <li className="link">
-                        <NavLink className={({isActive}) => isActive? "active": ""} to="account">Login</NavLink>
-                    </li>
                     <li className="link">
                         <NavLink className={({isActive}) => isActive? "active": ""} to="video">Video</NavLink>
                     </li>

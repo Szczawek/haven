@@ -7,7 +7,6 @@ export default function AccountFormContainer({logged}) {
    }
 
     return <div className="acc-form-box">
-            <p>Test</p> 
             <Outlet/>
         </div>
 }

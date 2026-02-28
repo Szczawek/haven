@@ -1,4 +1,4 @@
-import {useState, useRef} from "react";
+import {useState} from "react";
 import {createAccount} from "./createAccount.js";
 import {Link} from "react-router";
 const stdData = {
@@ -15,9 +15,8 @@ const stdLoading = {
 export default function CreateAccount({reLoading}) {
     const [data,setData] = useState(stdData);
     const [loading,setLoading] = useState(stdLoading);
-    const passInp = useRef(null);
-    const confInp = useRef(null);
-
+    const [isPassHidden, setIsPassHidden] = useState(true);
+ 
     function refresh(name, bool) {
         setLoading(prev =>({...prev, [name]:bool}))
     }
@@ -27,15 +26,6 @@ export default function CreateAccount({reLoading}) {
         setData(prev => ({...prev,[name]:value}));
     }
 
-    function setShowPass() {
-        if(passInp.current.type == "password") {
-            passInp.current.type = "text";
-            confInp.current.type = "text";
-            return;
-        }
-        passInp.current.type = "password";
-        confInp.current.type = "password";
-    }
     async function submit(e) {
         try {
             e.preventDefault()
@@ -65,16 +55,17 @@ export default function CreateAccount({reLoading}) {
                 </label>
                 <label htmlFor="inp-password" className="lb-acc">
                     Password
-                    <button tabIndex="-1" className="show-pass" onClick={setShowPass} type="button">X</button>
-                    <input ref={passInp} id="inp-password" value={data.password} onChange={setValue} type="password" required maxLength="30" name="password" minLength="3" placeholder="Put your password..." />
+                    <button tabIndex="-1" className="show-pass" onClick={()=>setIsPassHidden(prev=>!prev)} type="button">{isPassHidden? <img src="/images/eye-close.svg" alt="icon"/> : <img src="/images/eye-open.svg" alt="icon"/>}</button>
+                    <input id="inp-password" value={data.password} onChange={setValue} type={isPassHidden? "password": "text"} required maxLength="30" name="password" minLength="3" placeholder="Put your password..." />
                 </label>
                 <label htmlFor="inp-c-password" className="lb-acc">
                     Confirm Password
-                    <input ref={confInp} id="inp-c-password" value={data.copassword} onChange={setValue} type="password" required maxLength="30" name="copassword" minLength="3" placeholder="Put your password..." />
+                    <input id="inp-c-password" value={data.copassword} onChange={setValue} type={isPassHidden? "password": "text"} required maxLength="30" name="copassword" minLength="3" placeholder="Put your password..." />
                 </label>
                 <button className="sb" type="submit">Submit</button>
             </form>
             <div className="panel">
+                <p>Go to:</p>
                 <Link to="..">Login in</Link>
             </div>
         </div>

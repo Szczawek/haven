@@ -1,7 +1,12 @@
+.login-ac, .create-box {
+    display:grid;
+    row-gap:1rem;
+}
 .acc-form-box .show-pass {
     position:absolute;
     right:0;
     top: 0;
+    cursor:pointer;
     background-color:transparent;
     height: 1.4rem;
 }
@@ -48,3 +53,21 @@
     filter:brightness(.5);
 }
 
+.acc-form-box .panel {
+    color:var(--red-c);
+    font-weight:700;
+    display:grid;
+    justify-content:center;
+    align-items:center;
+    font-size:1.7rem;
+    grid-template-columns: repeat(2,max-content);
+    column-gap:1rem;
+    transition: filter 300ms;
+}
+.acc-form-box .panel a {
+    width: max-content;
+    padding-block: 1rem;
+}
+.acc-form-box .panel a:is(:hover,:focuse) {
+    filter:brightness(1.5);
+}

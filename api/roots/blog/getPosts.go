@@ -3,7 +3,7 @@ package blog
 import (
 	"api/roots/database"
 	"encoding/json"
-//	"math/rand"
+	//	"math/rand"
 	"net/http"
 )
 
@@ -19,7 +19,7 @@ func GetPosts(res http.ResponseWriter, req *http.Request) {
 
 	cmd := "SELECT users.id, users.name, posts.content FROM posts LEFT JOIN users ON posts.userID = users.id WHERE users.id"
 	//nums := Randomizer()
-	rows, err := db.DB.Query(cmd);
+	rows, err := db.DB.Query(cmd)
 	if err != nil {
 		http.Error(res, "Database error, Can't find posts", http.StatusInternalServerError)
 		return

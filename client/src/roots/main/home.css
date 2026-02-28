@@ -5,7 +5,6 @@
 }
  
 .home .write-post {
-    width:800px;
     background-color:#1a1a1a;
     display:grid;
     border-radius:.8rem;
@@ -22,7 +21,7 @@
     resize:none;
     width:100%;
     min-height:8rem;
-    background-color:#ff66ff;
+    background-color:#4d0039;
 } 
 
 .home .text-box::-webkit-scrollbar {
@@ -57,10 +56,12 @@
 
 .home .controlls {
     display:grid;
+    padding-inline:1rem;
     justify-content: right;
 }
 .home .post-page {
     display:grid;
+    width:850px;
     row-gap:1rem;
 }
 
@@ -126,8 +127,51 @@
     cursor:pointer;
     padding: .6rem .6rem;
 }
+
+.home .write-post .text-lb {
+    position:relative;
+}
+
+.home .write-post .warning {
+    position:absolute;
+    color:purple;
+    font-weight:bold;
+    font-size:1.8rem;
+    width:100%;
+    display:grid;
+    place-content:center;
+    height:100%;
+    backdrop-filter: brightness(0.6);
+    top:0;
+    left:0;
+}
+
+.home .link-box {
+    font-size:1.5rem;
+    font-weight:700;
+    text-align:center;
+    letter-spacing:.1rem;
+    height: 100px;
+}
+.home .link-box a {
+    background: #2A7B9B;
+    background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+    display:grid;
+    place-content:center;
+    height:100%;
+    transition:background 300ms;
+}
+
+.home .link-box a:is(:hover, :focuse) {
+    background: #833AB4;
+    background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+}
 @media (width < 850px) {
-    .home .write-post  {
+    .home {
+        justify-content:normal;
+    }
+
+    .home .write-post, .home .post-page   {
         width: 100%;
     }
     

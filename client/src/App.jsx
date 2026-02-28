@@ -12,6 +12,7 @@ const Profile = lazy(()=>import("./roots/profile/Profile.jsx"));
 const Shop = lazy(()=>import("./roots/shop/Shop.jsx"));
 const AddItemToShop = lazy(()=>import("./roots/shop/AddItemForm.jsx"));
 const EditProfile = lazy(()=>import("./roots/profile/EditProfile.jsx"));
+const SinglePost = lazy(()=>import("./roots/post/SinglePost.jsx"));
 import Loading from "./roots/not-found/Loading.jsx";
  
 const stdStates = {
@@ -60,14 +61,15 @@ export default function App() {
                 <BrowserRouter>
                     <Navigator />
                     <Routes>
-                        <Route index element={<Home id={data.id}/>}/>
+                        <Route index element={<Home data={data} logged={states.logged}/>}/>
                         <Route path="edit-profile" element={<EditProfile/>}/>
                         <Route path="account" element={<AccountFormContainer logged={states.logged}/>}>
                             <Route index element={<LoginToAccount reLoading={autoLogin}/>} />
                             <Route path="create" element={<CreateAccount reLoading={autoLogin}/>}/>
                         </Route>
-                        <Route path="profile" element={<Profile data={data}/>}/>
+                        <Route path="profile" element={<Profile logged={states.logged} data={data}/>}/>
                         <Route path="shop" element={<Shop/>} />
+                        <Route path="com/*" element={<SinglePost/>}/>
                         <Route path="shop/add-item" element={<AddItemToShop/>}/>
                         <Route path="*" element={<NotFound/>}/>
                     </Routes>
