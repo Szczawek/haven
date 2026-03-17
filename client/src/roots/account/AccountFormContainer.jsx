@@ -6,7 +6,7 @@ export default function AccountFormContainer({logged}) {
         return <Navigate to="/"/>
    }
 
-    return <div className="acc-form-box">
+    return <div className="account-action">
             <Outlet/>
         </div>
 }

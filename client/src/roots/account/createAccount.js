@@ -7,6 +7,6 @@ export async function createAccount(data) {
         credentials:"include",
         body:JSON.stringify(data)
     }
-    const res = await fetch("https://127.0.0.1:3000/api/create-account",options)
-    if(!res.ok) throw new Error(res.status);
+    const res = await fetch(`${__SERVER_URL__}/create-account`,options)
+    return res;
 }

@@ -37,7 +37,7 @@ export default function WritePost({data, logged}) {
     }
 
     if(!logged) {
-        return <div className="link-box"><Link to="/account">To add comment, you must be logged in. Click here to login!</Link></div>
+        return <div className="link-box"><Link to="/account">Log in</Link></div>
     }
 
     return <form onSubmit={submit} className="write-post">

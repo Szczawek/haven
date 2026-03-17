@@ -18,9 +18,13 @@ body {
     font-style: normal;
     font-size:20px;
     color:white;
+    min-height:100vh;
     background-color:var(--main-bg);
 }
 
+body #root, body .app {
+    height:100%;
+}
 input, button, textarea {
     display:block;
     color:inherit;

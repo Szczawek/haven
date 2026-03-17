@@ -1,6 +1,7 @@
 .profile {
     display:grid;
     justify-content:center;
+    height:100%;
 }
 
 .tablo {
@@ -28,6 +29,13 @@
 
 .tablo .box-one .avatar img {
     width: 4rem;
+}
+
+.empty-container .msg {
+    display:grid;
+    place-content:center;
+    min-height: 200px;
+    font-size:1.6rem;
 }
 
 .tablo .box-two {

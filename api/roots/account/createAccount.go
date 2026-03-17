@@ -14,6 +14,17 @@ type CreateAccTemp struct {
 	Name     string `json:"name"`
 	Login    string `json: "login"`
 	Password string `json: "password"`
+	Hash     string `json:"hash"`
+}
+
+type NotTheSameTemp struct {
+	Login string `json:"login"`
+	Hash  string `json:"hash"`
+}
+
+type ErrorRes struct {
+	Email bool `json:"email"`
+	Hash  bool `json:"hash"`
 }
 
 func CreateAccount(res http.ResponseWriter, req *http.Request) {
@@ -25,10 +36,10 @@ func CreateAccount(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	cmd := "SELECT id FROM users WHERE login =?"
-	row := db.DB.QueryRow(cmd, data.Login)
-	var id int
-	if err := row.Scan(&id); err != nil {
+	cmd := "SELECT login, hash FROM users WHERE login =? OR hash =?"
+	row := db.DB.QueryRow(cmd, data.Login, data.Hash)
+	var potUser NotTheSameTemp
+	if err := row.Scan(&potUser.Login, &potUser.Hash); err != nil {
 		if err == sql.ErrNoRows {
 			password, err := argonPassword.Hash(data.Password)
 			if err != nil {
@@ -42,12 +53,21 @@ func CreateAccount(res http.ResponseWriter, req *http.Request) {
 		http.Error(res, "Database err; Problem with row.Scan", http.StatusInternalServerError)
 		return
 	}
-	res.Write([]byte("You can't use that email!"))
+
+	var errMsg = ErrorRes{
+		Email: potUser.Login == data.Login,
+		Hash:  potUser.Hash == data.Hash,
+	}
+
+	res.WriteHeader(406)
+	if err := json.NewEncoder(res).Encode(errMsg); err != nil {
+		http.Error(res, "Encoding error", http.StatusInternalServerError)
+	}
 }
 
 func insertData(res http.ResponseWriter, data CreateAccTemp) {
-	cmd := "INSERT INTO users(name,login,password) VALUES(?,?,?)"
-	r, err := db.DB.Exec(cmd, data.Name, data.Login, data.Password)
+	cmd := "INSERT INTO users(name,login,password,hash) VALUES(?,?,?,?)"
+	r, err := db.DB.Exec(cmd, data.Name, data.Login, data.Password, data.Hash)
 	if err != nil {
 		http.Error(res, "Database err. Inserting data failure", http.StatusInternalServerError)
 		return
@@ -59,5 +79,4 @@ func insertData(res http.ResponseWriter, data CreateAccTemp) {
 	}
 	num := strconv.FormatInt(id, 10)
 	session.Login(res, num)
-	res.Write([]byte("Account wast created!"))
 }

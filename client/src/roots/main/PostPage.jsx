@@ -1,25 +1,29 @@
 import {useState} from "react"
 import {useGetPosts} from "./useGetPosts.js";
+import {Link} from "react-router";
+
 export default function PostPage() {
     const list = useGetPosts();
 
+    if(list.length == 0) {
+        return <p className="empty-page">Empty</p>
+    }
+    
     return <div className="post-page">
-        {list.length == 0?<p>Empty page</p> :
-        list.map((e,id) => {
-            return <Post data={e} key={id} />
-        })}
+            {list.map((e,id) => {
+                return <Post data={e} key={id} />
+            })}
         </div>
 }
 
 function Post({data}) {
     const [menu, setMenu] = useState(false);
-    
     function closeMenu(e) {
         if(!e.relatedTarget) setMenu(false);
     }
     return <div className="post">
                 <header className="user-info">
-                    <div className="avatar"><img src="/images/user.svg" alt="profile"/></div>
+                    <div className="avatar"><Link to={`profile/${data.hash}`}><img src="/images/user.svg" alt="profile"/></Link></div>
                     <h2 className="user-name">{data.name}</h2>
                     <div onBlur={closeMenu} className="options">
                         <button onClick={()=>setMenu(prev => !prev)} className="show-list"><img src="/images/menu.svg" alt="icon"/></button>

@@ -28,7 +28,7 @@ func main() {
 	}
 
 	r := chi.NewRouter()
-	apiR := chi.NewRouter()
+	rLog := chi.NewRouter()
 	api := &http.Server{
 		Addr:           ":3000",
 		Handler:        r,
@@ -42,17 +42,17 @@ func main() {
 
 	r.Use(config.CorsConfig)
 	r.NotFound(config.NotFound)
-	r.Mount("/api", apiR)
-	r.Get("/start-session", middleware.ActiveSession)
+	r.Mount("/api/v2", rLog)
+	r.Post("/api/login-to-account", account.LoginToAccount)
+	r.Post("/api/create-account", account.CreateAccount)
+	r.Get("/api/auto-login", account.AutoLogin)
+	r.Get("/api/get-posts", blog.GetPosts)
+	r.Get("/api/get-user-posts", blog.GetUserPosts)
 
-	// apiR.Use(middleware.doorTwo);
-	apiR.Post("/login-to-account", account.LoginToAccount)
-	apiR.Post("/create-account", account.CreateAccount)
-	apiR.Get("/auto-login", account.AutoLogin)
-	apiR.Post("/logout", session.Logout)
-	apiR.Post("/add-item", shop.AddItem)
-	apiR.Post("/add-post", blog.AddPost)
-	apiR.Get("/get-posts", blog.GetPosts)
+	rLog.Use(middleware.AuthDoor)
+	rLog.Post("/logout", session.Logout)
+	rLog.Post("/add-item", shop.AddItem)
+	rLog.Post("/add-post", blog.AddPost)
 
 	fmt.Println("https://127.0.0.1:3000")
 	log.Fatal(api.ListenAndServeTLS(cert, key))

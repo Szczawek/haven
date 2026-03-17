@@ -43,5 +43,4 @@ func LoginToAccount(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 	session.Login(res, user.ID)
-	json.NewEncoder(res).Encode("logged!")
 }

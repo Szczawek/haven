@@ -2,7 +2,7 @@
     display:grid;
     row-gap:1rem;
 }
-.acc-form-box .show-pass {
+.account-action .show-pass {
     position:absolute;
     right:0;
     top: 0;
@@ -16,31 +16,42 @@
     row-gap:1rem;
 }
 
-.login-ac .title, .create-box .title {
+.account-action .title {
     text-align: center;
+    font-size:2rem;
 }
-.login-ac .lb-acc, .create-box .lb-acc {
+
+.account-action .inp-box {
     display:grid;
     position:relative;
-    row-gap:.4rem;
-    letter-spacing:.2rem;
-    font-size:1.3rem;
+    row-gap:.2rem;
+    font-size:1.6rem;
     font-weight:bold;
 }
 
-.login-ac .lb-acc input, .create-box .lb-acc input {
-    padding: .6rem 1rem;
+.account-action .data-inp {
+    padding:.8rem 1rem;
     color:black;
-    font-weight:700;
-    font-size: 1.4rem;
+    background-color:#ffccff;
+    letter-spacing: .2rem;
+    font-size:1.4rem;
+    transition:background-color, color, 300ms;
 }
 
-.login-ac input::placeholder, .create-box input::placeholder {
-    color:purple;
+.account-action .data-inp:is(:hover,:focus-with,:focus,:focus-visible) {
+    background-color:var(--red);
+    color:white;
+}
+
+.account-action .data-inp::placeholder {
+    color:#330033;
+    font-weight:bold;
     font-size:1.2rem;
+    letter-spacing: .15rem;
 }
 
-.login-ac .sb, .create-box .sb {
+
+.account-action button[class="sb"] {
     background-color: var(--contrast-bg);
     padding:.8rem .8rem;
     font-size: 1.2rem;
@@ -49,11 +60,11 @@
     cursor:pointer;
     transition: filter 150ms;;
 }
-.login-ac .sb:is(:hover,:focus), .create-box .sb:is(:hover, :focuse) {
+.account-action button[class="sb"]:is(:hover,:focus,:focus-with,:focus-visible) {
     filter:brightness(.5);
 }
 
-.acc-form-box .panel {
+.account-action .panel {
     color:var(--red-c);
     font-weight:700;
     display:grid;
@@ -64,10 +75,10 @@
     column-gap:1rem;
     transition: filter 300ms;
 }
-.acc-form-box .panel a {
+.account-action .panel a {
     width: max-content;
     padding-block: 1rem;
 }
-.acc-form-box .panel a:is(:hover,:focuse) {
+.account-action .panel a:is(:hover,:focuse) {
     filter:brightness(1.5);
 }

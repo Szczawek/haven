@@ -45,14 +45,14 @@ export default function LoginToAccount({reLoading}) {
     return <div className="login-ac">
             <form className="login-form" onSubmit={submit}>
                 <h2 className="title">Login</h2>
-                <label className="lb-acc" htmlFor="inp-l-login">
+                <label className="inp-box" htmlFor="inp-l-login">
                  Login
-                    <input  type="email" id="inp-l-login" required name="login" value={data.login} onChange={setValue} maxLength="30" minLength="3" placeholder="place your login..."/>
+                    <input className="data-inp" type="email" id="inp-l-login" required name="login" value={data.login} onChange={setValue} maxLength="30" minLength="3" placeholder="place your login..."/>
                 </label>   
-                <label className="lb-acc" htmlFor="inp-l-pass">
+                <label className="inp-box" htmlFor="inp-l-pass">
                     Password
-                    <input  type={isPassHidden? "password": "text"} id="inp-l-pass" required name="password" value={data.password} onChange={setValue} maxLength="30" minLength="3" placeholder="place your password..."/>
-                    <button type="button" onClick={()=>setIsPassHidden(prev =>!prev)} className="show-pass">{isPassHidden? <img src="/images/eye-close.svg" alt="icon"/> : <img src="/images/eye-open.svg" alt="icon"/>}</button>
+                    <input className="data-inp"  type={isPassHidden? "password": "text"} id="inp-l-pass" required name="password" value={data.password} onChange={setValue} maxLength="30" minLength="3" placeholder="place your password..."/>
+                    <button tabIndex="-1" type="button" onClick={()=>setIsPassHidden(prev =>!prev)} className="show-pass">{isPassHidden? <img src="/images/eye-close.svg" alt="icon"/> : <img src="/images/eye-open.svg" alt="icon"/>}</button>
                 </label> 
                 <button className="sb" type="submit">Submit</button>
             </form>

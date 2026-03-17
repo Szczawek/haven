@@ -3,7 +3,14 @@
     row-gap:4rem;
     justify-content:center;
 }
- 
+
+.home .empty-page{
+    display:grid;
+    align-items:center;
+    text-align:center;
+    font-size:1.4rem;
+    height:150px;
+}
 .home .write-post {
     background-color:#1a1a1a;
     display:grid;
@@ -147,25 +154,21 @@
 }
 
 .home .link-box {
-    font-size:1.5rem;
-    font-weight:700;
+    border:1px solid red;
+    width: 850px;
+    font-size:2rem;
     text-align:center;
-    letter-spacing:.1rem;
     height: 100px;
 }
 .home .link-box a {
-    background: #2A7B9B;
-    background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
     display:grid;
     place-content:center;
     height:100%;
-    transition:background 300ms;
 }
 
 .home .link-box a:is(:hover, :focuse) {
-    background: #833AB4;
-    background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
-}
+    filter:brightness(.6);
+}   
 @media (width < 850px) {
     .home {
         justify-content:normal;

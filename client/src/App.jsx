@@ -13,6 +13,9 @@ const Shop = lazy(()=>import("./roots/shop/Shop.jsx"));
 const AddItemToShop = lazy(()=>import("./roots/shop/AddItemForm.jsx"));
 const EditProfile = lazy(()=>import("./roots/profile/EditProfile.jsx"));
 const SinglePost = lazy(()=>import("./roots/post/SinglePost.jsx"));
+const WatchPage = lazy(()=>import("./roots/video/WatchPage.jsx"));
+const AddVideo = lazy(()=>import("./roots/video/AddVideo.jsx"));
+
 import Loading from "./roots/not-found/Loading.jsx";
  
 const stdStates = {
@@ -40,7 +43,6 @@ export default function App() {
             refresh("loading", true);
             const res = await getLoginData();
             setData(res);
-            console.log(2)
             refresh("logged", true);
         } catch(err) {
             refresh("error", true);
@@ -59,15 +61,17 @@ export default function App() {
         <div className="app">
             <Suspense fallback={<Loading/>}>
                 <BrowserRouter>
-                    <Navigator />
+                    <Navigator userHash={data.hash} />
                     <Routes>
                         <Route index element={<Home data={data} logged={states.logged}/>}/>
-                        <Route path="edit-profile" element={<EditProfile/>}/>
+                        <Route path="video" element={<WatchPage/>}/>
+                        <Route path="video/add" element={<AddVideo/>}/>
+                        <Route path="profile/edit" element={<EditProfile/>}/>
+                        <Route path="profile/*" element={<Profile loggedID={data.id}/>}/>
                         <Route path="account" element={<AccountFormContainer logged={states.logged}/>}>
                             <Route index element={<LoginToAccount reLoading={autoLogin}/>} />
                             <Route path="create" element={<CreateAccount reLoading={autoLogin}/>}/>
                         </Route>
-                        <Route path="profile" element={<Profile logged={states.logged} data={data}/>}/>
                         <Route path="shop" element={<Shop/>} />
                         <Route path="com/*" element={<SinglePost/>}/>
                         <Route path="shop/add-item" element={<AddItemToShop/>}/>
@@ -78,3 +82,5 @@ export default function App() {
         </div>
     )
 }
+
+

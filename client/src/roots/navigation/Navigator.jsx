@@ -1,20 +1,20 @@
 import {NavLink} from "react-router";
 import "./nav.css";
-export default function Navigator() {
+export default function Navigator({userHash}) {
     return <header className="navigator-box">
             <nav className="navigator">
                 <ul className="list">
                     <li className="link">
-                        <NavLink className={({isActive}) => isActive? "active": ""} to="">Home</NavLink>
+                        <NavLink className={({isActive}) => isActive? "active": undefined} to="">Home</NavLink>
                     </li>
                     <li className="link">
-                        <NavLink className={({isActive}) => isActive? "active": ""} to="video">Video</NavLink>
+                        <NavLink className={({isActive}) => isActive? "active": undefined} to="video">Video</NavLink>
                     </li>
                     <li className="link">
-                        <NavLink className={({isActive}) => isActive? "active": ""} to="shop">Shop</NavLink>
+                        <NavLink className={({isActive}) => isActive? "active": undefined} to="shop">Shop</NavLink>
                     </li>
                     <li className="link">
-                        <NavLink className={({isActive}) => isActive? "active": ""} to="profile">Profile</NavLink>
+                        <NavLink className={({isActive}) => isActive? "active": undefined} to={`profile/${userHash}`} >Profile</NavLink>
                     </li>
                 </ul>
             </nav>

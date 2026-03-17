@@ -13,7 +13,7 @@ function useGetPosts() {
                     method:"GET",
                     credentials:"include",
                 }
-                const res = await fetch("https://127.0.0.1:3000/api/get-posts", options);
+                const res = await fetch(`${__SERVER_URL__}/get-posts`, options);
                 if(!res.ok) throw new Error(res.status);
                 const obj = await res.json();
                 if(obj == null) return;
@@ -21,7 +21,7 @@ function useGetPosts() {
             } catch(err) {
                 console.error(err)
             } finally {
-                console.log("finally");
+                console.log("done");
             }
         }
         loadList();
