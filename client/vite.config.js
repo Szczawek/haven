@@ -3,9 +3,8 @@ import react from '@vitejs/plugin-react'
 import fs from "fs";
 
 export default defineConfig(({mode}) => {
-
     const env = loadEnv(mode, process.cwd(),'')
-    console.log(env.VITE_URL)
+
     return {
         define: {
             __SERVER_URL__: JSON.stringify(env.VITE_URL),

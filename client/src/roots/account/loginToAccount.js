@@ -7,6 +7,6 @@ export async function loginToAccount(data) {
         credentials: "include",
         body:JSON.stringify(data)
     }
-    const res = await fetch(`${__SERVER__URL__}/login-to-account`,options);
+    const res = await fetch(`${__SERVER_URL__}/login-to-account`,options);
     if(!res.ok) throw new Error(res.status);
 }

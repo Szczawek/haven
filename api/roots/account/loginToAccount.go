@@ -32,7 +32,7 @@ func LoginToAccount(res http.ResponseWriter, req *http.Request) {
 	var user LoggedUserTemp
 	if err := row.Scan(&user.ID, &user.Pass); err != nil {
 		if err == sql.ErrNoRows {
-			http.Error(res, "Incorrect data", http.StatusForbidden)
+			http.Error(res, "Incorrect data", http.StatusUnauthorized)
 			return
 		}
 		http.Error(res, "Database err. Scaning rows problem", http.StatusInternalServerError)
@@ -42,5 +42,5 @@ func LoginToAccount(res http.ResponseWriter, req *http.Request) {
 		http.Error(res, "Incorrect data", http.StatusForbidden)
 		return
 	}
-	session.Login(res, user.ID)
+	session.SetSession(res, user.ID)
 }

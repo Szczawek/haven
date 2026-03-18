@@ -78,5 +78,5 @@ func insertData(res http.ResponseWriter, data CreateAccTemp) {
 		return
 	}
 	num := strconv.FormatInt(id, 10)
-	session.Login(res, num)
+	session.SetSession(res, num)
 }

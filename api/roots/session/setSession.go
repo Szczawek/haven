@@ -26,15 +26,15 @@ func createToken(id string) (string, error) {
 	return signedToken, err
 }
 
-func Login(res http.ResponseWriter, id string) {
+func SetSession(res http.ResponseWriter, id string) {
 	token, err := createToken(id)
 	if err != nil {
 		http.Error(res, "JWT token error", http.StatusInternalServerError)
 		return
 	}
 
-	cookies := &http.Cookie{
-		Name:     "session",
+	cookie := &http.Cookie{
+		Name:     "auth",
 		Value:    token,
 		Secure:   true,
 		HttpOnly: true,
@@ -43,6 +43,6 @@ func Login(res http.ResponseWriter, id string) {
 		SameSite: http.SameSiteNoneMode,
 	}
 
-	http.SetCookie(res, cookies)
+	http.SetCookie(res, cookie)
 	res.Write([]byte("logged!"))
 }

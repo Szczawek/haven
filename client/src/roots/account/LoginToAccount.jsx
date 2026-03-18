@@ -34,7 +34,7 @@ export default function LoginToAccount({reLoading}) {
             console.log("logged")
             reLoading()
         } catch(err) {
-            console.error("erer")
+            console.error(err)
             refresh("error",true);
         } finally 
         {

@@ -45,12 +45,12 @@ func main() {
 	r.Mount("/api/v2", rLog)
 	r.Post("/api/login-to-account", account.LoginToAccount)
 	r.Post("/api/create-account", account.CreateAccount)
-	r.Get("/api/auto-login", account.AutoLogin)
 	r.Get("/api/get-posts", blog.GetPosts)
 	r.Get("/api/get-user-posts", blog.GetUserPosts)
 
-	rLog.Use(middleware.AuthDoor)
-	rLog.Post("/logout", session.Logout)
+	rLog.Use(middleware.GateOne)
+    rLog.Get("/get-user-data",account.GetUserData);
+	rLog.Post("/logout", session.RemoveSession);
 	rLog.Post("/add-item", shop.AddItem)
 	rLog.Post("/add-post", blog.AddPost)
 
