@@ -13,7 +13,7 @@ func Authentication(res http.ResponseWriter, req *http.Request) error {
 	cookie, err := req.Cookie("auth")
 	if err != nil {
 		if err == http.ErrNoCookie {
-			http.Error(res, "Empty cookie, auth", http.StatusUnauthorized)
+			http.Error(res, "Empty cookie", http.StatusUnauthorized)
 			return err
 		}
 		http.Error(res, "Cookie isn't anvaliable, error", http.StatusInternalServerError)
@@ -39,6 +39,7 @@ func Authentication(res http.ResponseWriter, req *http.Request) error {
 	}
 
 	if _, err := req.Cookie("id"); err != nil {
+	    fmt.Error("test",err);
         if claims, ok := token.Claims.(*session.CustomClaims); ok {
 			idCookie := &http.Cookie{
 				Name:     "id",
@@ -51,9 +52,8 @@ func Authentication(res http.ResponseWriter, req *http.Request) error {
 			}
 			http.SetCookie(res, idCookie)
 			return nil
-        }
-        http.Error(res, "Empty claims in jwt", http.StatusInternalServerError)
-        return fmt.Errorf("Empty claims in jwt")
+		}
 	}
-    return nil
+	http.Error(res, "Empty claims in jwt", http.StatusInternalServerError)
+	return fmt.Errorf("Empty claims in jwt")
 }

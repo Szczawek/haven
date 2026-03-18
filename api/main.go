@@ -49,8 +49,8 @@ func main() {
 	r.Get("/api/get-user-posts", blog.GetUserPosts)
 
 	rLog.Use(middleware.GateOne)
-    rLog.Get("/get-user-data",account.GetUserData);
-	rLog.Post("/logout", session.RemoveSession);
+	rLog.Get("/get-user-data", account.GetUserData)
+	rLog.Post("/logout", session.RemoveSession)
 	rLog.Post("/add-item", shop.AddItem)
 	rLog.Post("/add-post", blog.AddPost)
 
